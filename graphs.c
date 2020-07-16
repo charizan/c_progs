@@ -99,3 +99,39 @@ for(i=0;i<n;i++){
      
 }//DYNAMICpayoff2 END
 
+
+int minDistance(int dist[], int sptSet[],int size)
+{//minDistance start
+   int min = INT_MAX, min_index;
+   int v;
+   for (v = 0; v < size; v++)
+     if (sptSet[v] == 0 && dist[v] <= min)
+         min = dist[v], min_index = v;
+ 
+   return min_index;
+}//minDistance end
+
+void dijkstra(int dist[V],int graph[V][V], int src,int size)
+{//djkstra start
+     int sptSet[size];
+     int i;
+     for (i = 0; i < size; i++)
+        dist[i] = INT_MAX, sptSet[i] = 0;
+
+     dist[src] = 0;
+     int count;
+     for (count = 0; count < V-1; count++)
+     {
+       int u = minDistance(dist, sptSet,size);
+       sptSet[u] = 1;
+    int v;
+       for (v = 0; v < size; v++)
+         if (!sptSet[v] && graph[u][v] && dist[u] != INT_MAX 
+                                       && dist[u]+graph[u][v] < dist[v])
+            dist[v] = dist[u] + graph[u][v];
+
+     }
+
+}//djkstra end
+
+
